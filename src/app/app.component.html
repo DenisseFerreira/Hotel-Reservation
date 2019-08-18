@@ -1,8 +1,22 @@
-<!--The content below is only a placeholder and can be replaced.-->
+ <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
     Welcome to {{ title }}!
   </h1>
+
+
+Desde <input #fechadesde [value]="" type="date" min="2019-02-20" max="2030-04-24" > <br> <br>
+Hasta <input #fechahasta [value]="inputfecha2" type="date" min="2019-02-20" max="2030-04-24"> <br> <br>
+
+
+<p> Indica que cliente eres: </p>
+<input type="radio"  >Cliente Regular
+<input type="radio"  >Cliente Frecuente
+
+
+
+<button  (click)="search(fechadesde.value,fechahasta.value)" >Buscar</button>
+
 
 
 <router-outlet></router-outlet>
