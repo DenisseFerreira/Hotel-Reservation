@@ -9,38 +9,41 @@ import { HotelService } from 'src/app/services/hotel.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
+
 export class AppComponent implements OnInit{
-  title = 'Hotel-Reservation';
 
+/*Variables del tipo Hotel */
   hoteles : Hotel [];
-
   hotel: Hotel;
 
   
-            constructor() { }
+constructor() {}
+ngOnInit() {}
 
 
-  ngOnInit() {}
+/* Funciones */
+search(startDate , endDate){
 
-
-search(fechadesde , fechahasta){
-    let inicio = new Date(fechadesde); //Fecha inicial
-    let fin = new Date(fechahasta); //Fecha final
+  /* Declaro variables globales */
+    let inicio = new Date(startDate); //Fecha inicial
+    let fin = new Date(endDate); //Fecha final
     let cuentaFinde = 0;
     let cuentaHabiles = 0;
     let masbarato = 0;
     let totalhotel = 0;
     let hotelbarato : Hotel;
-    fechadesde = fechadesde.replace(/-+/g, '');
-    fechahasta = fechahasta.replace(/-+/g, '');
-/*   console.log('fechadesde '+ fechadesde);
-  console.log('fechahasta '+ fechahasta); */
-  
-let diastotales = fechahasta - fechadesde +1;
-console.log('Dias totales :' , diastotales);
 
-for (var i=0; i < diastotales; i++) 
-    {
+ /* Buscando la cantidad de dias ingresada por el usuario */
+    startDate = startDate.replace(/-+/g, '');
+    endDate = endDate.replace(/-+/g, '');
+      /*console.log('startDate '+ startDate);
+       console.log('endDate '+ endDate); */
+    let totalDays = endDate - startDate +1;
+    console.log('Dias totales :' , totalDays);
+
+  /* Identificar dias habiles y fin de semana */
+  for (let i=0; i < totalDays; i++) {
         //6 => Domingo - 5 => Sábado
         if (inicio.getDay() == 6 || inicio.getDay() == 5) {
                  cuentaFinde++;
@@ -48,18 +51,18 @@ for (var i=0; i < diastotales; i++)
         inicio.setDate(inicio.getDate() + 1);
     }
       console.log('Dias de fin de semana son : ' ,cuentaFinde);
-      cuentaHabiles = diastotales - cuentaFinde;
+      cuentaHabiles = totalDays - cuentaFinde;
       console.log('Dias habiles son : ' , cuentaHabiles);
-
       this.hoteles = dataHotel;
-      
+      this.hoteles.forEach((element: Hotel) => {
 
-      this.hoteles.forEach(function (element: Hotel){
-
+        // si radio button name="client-type" value="frequent-client"
+       // if (client_type === "frequent-client"){
          totalhotel = (cuentaFinde * element.frequentWeekEnd ) + (cuentaHabiles * element.frequentWeekDay);
-         
-        //  totalhotel = (cuentaFinde * element.regularWeekEnd ) + (cuentaHabiles * element.regularWeekDay);
-         
+     //   }
+       //  else{
+       //   totalhotel = (cuentaFinde * element.regularWeekEnd ) + (cuentaHabiles * element.regularWeekDay);
+      //  }
          
          
          if(masbarato != 0){
@@ -67,6 +70,11 @@ for (var i=0; i < diastotales; i++)
             {
               masbarato = totalhotel;
               hotelbarato = element;
+            }
+            else if(totalhotel === masbarato){
+                    if(hotelbarato.stars < element.stars){
+                      hotelbarato = element;                   
+                    }
             }
 
          }else{
@@ -76,9 +84,9 @@ for (var i=0; i < diastotales; i++)
 
       });
       this.hotel = hotelbarato;
-      console.log(this.hotel)
-
+      console.log(this.hotel, "total del hotel:" ,totalhotel);
 }
+
 
 
 

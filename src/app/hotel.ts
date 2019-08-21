@@ -1,9 +1,11 @@
 
-
+/*Declarando la clase Hotel para ser utilizada
+como estructura en la data */
 export class Hotel {
     public id: number;   
     public name :string; 
     public stars : number;
+    public img : string;
     public regularWeekDay : number;
     public regularWeekEnd : number;
     public frequentWeekDay : number;
