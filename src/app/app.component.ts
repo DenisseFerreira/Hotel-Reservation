@@ -1,8 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { dataHotel } from 'src/app/dataHotel';
 import { Hotel } from 'src/app/hotel';
-import { HotelService } from 'src/app/services/hotel.service';
-
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,8 @@ import { HotelService } from 'src/app/services/hotel.service';
 
 export class AppComponent implements OnInit{
 
-/*Variables del tipo Hotel */
+/*Atributos(es una variable, pero al estar
+  dentro de una clase se llama atributo) y su tipo */
   hoteles : Hotel [];
   hotel: Hotel;
 
@@ -22,8 +22,8 @@ constructor() {}
 ngOnInit() {}
 
 
-/* Funciones */
-search(startDate , endDate){
+/* Metodos (funciones) */
+search(startDate , endDate, typeClient){
 
   /* Declaro variables globales */
     let inicio = new Date(startDate); //Fecha inicial
@@ -35,12 +35,14 @@ search(startDate , endDate){
     let hotelbarato : Hotel;
 
  /* Buscando la cantidad de dias ingresada por el usuario */
-    startDate = startDate.replace(/-+/g, '');
-    endDate = endDate.replace(/-+/g, '');
-      /*console.log('startDate '+ startDate);
-       console.log('endDate '+ endDate); */
-    let totalDays = endDate - startDate +1;
-    console.log('Dias totales :' , totalDays);
+    // startDate = startDate.replace(/-+/g, '');
+     //endDate = endDate.replace(/-+/g, '');
+    
+     let fecha1 = moment(startDate);
+     let fecha2 = moment(endDate);
+     let totalDays = fecha2.diff(fecha1, 'days')+1;
+    console.log(totalDays, ' dias de diferencia');
+
 
   /* Identificar dias habiles y fin de semana */
   for (let i=0; i < totalDays; i++) {
@@ -54,15 +56,16 @@ search(startDate , endDate){
       cuentaHabiles = totalDays - cuentaFinde;
       console.log('Dias habiles son : ' , cuentaHabiles);
       this.hoteles = dataHotel;
+
+
       this.hoteles.forEach((element: Hotel) => {
 
-        // si radio button name="client-type" value="frequent-client"
-       // if (client_type === "frequent-client"){
+        if (typeClient === "frequent-client"){
          totalhotel = (cuentaFinde * element.frequentWeekEnd ) + (cuentaHabiles * element.frequentWeekDay);
-     //   }
-       //  else{
-       //   totalhotel = (cuentaFinde * element.regularWeekEnd ) + (cuentaHabiles * element.regularWeekDay);
-      //  }
+      }
+       else{
+        totalhotel = (cuentaFinde * element.regularWeekEnd ) + (cuentaHabiles * element.regularWeekDay);
+       }
          
          
          if(masbarato != 0){
@@ -71,8 +74,8 @@ search(startDate , endDate){
               masbarato = totalhotel;
               hotelbarato = element;
             }
-            else if(totalhotel === masbarato){
-                    if(hotelbarato.stars < element.stars){
+            else if(totalhotel === masbarato){ //Comparacion del mismo precio
+                    if(hotelbarato.stars < element.stars){   //El que tiene mas estrella sera escogido
                       hotelbarato = element;                   
                     }
             }
@@ -88,21 +91,6 @@ search(startDate , endDate){
 }
 
 
-
-
-
-
-
-/* this.getHotel(); */
-
-  /* var diff = Math.abs(date1.getTime() - date2.getTime());
-  var diffDays = Math.ceil(diff / (1000 * 3600 * 24));  */
-
-  /*   getHotel(): void {
-   
-          this.hotel = dataHotel;
-          console.log(this.hotel);
-    } */
 }
 
 

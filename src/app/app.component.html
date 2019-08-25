@@ -1,51 +1,58 @@
+<!-- <Header class="wrapper">
+
+  <h1>Busca el mejor hotel</h1>
+</Header> -->
+
 <!-- Seleccion del Hotel -->
-<div class="container col-lg-8 col-md-12 col-sm-12 col-xs-12">
-  <div class="cover-page col-lg-8 col-md-12 col-sm-12 col-xs-12">
-    <div class="input" >
+<div class="container ">
+  <div class="cover-page">
+    <div class="input">
       <h1>Busca el mejor hotel</h1>
       <p>Indica tu fecha de llegada</p>
       <input #fechadesde [value]="" type="date" min="2019-02-20" max="2030-04-24"> <br>
       <p>Indica tu fecha de salida</p>
       <input #fechahasta [value]="inputfecha2" type="date" min="2019-02-20" max="2030-04-24">
     </div>
- 
-    <div class="col-lg-12 col-md-6 col-sm-6 col-xs-6">
-      <p> Indica que cliente eres: </p>
-      <input type="radio" name="client-type" value="regular-client" checked>Cliente Regular <br>
-      <input type="radio" name="client-type" value="frequent-client" >Cliente Frecuente
-    </div>
-
-    <div>
+  
+    <p> Indica que tipo de cliente eres: </p>
+    <div class="client-buttonR">
+     
       <!-- Button que llamara al modal -->
-      <button (click)="search(fechadesde.value,fechahasta.value)" type="button" class="btn btn-secondary btn-lg "
-        data-toggle="modal" data-target="#exampleModal">Buscar       
+      <button (click)="search(fechadesde.value,fechahasta.value, 'regular-client')" type="button" class="btn btn-secondary btn-lg "
+        data-toggle="modal" data-target="#exampleModal"> Regular
       </button>
     </div>
-  </div>
-</div>
+    <div class="client-buttonF">
+      <button (click)="search(fechadesde.value,fechahasta.value, 'frequent-client')" type="button" class="btn btn-secondary btn-lg "
+        data-toggle="modal" data-target="#exampleModal"> Frecuente
+      </button>
+    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Hotel mas economico es:</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{hotel.name}},
-        {{hotel.stars}} estrellas
-        <img src="../assets/img/hotel1.jpg" alt="" class="img-hotel">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Hotel mas economico es:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          {{hotel.name}},
+          {{hotel.stars}} estrellas
+          <img src="../assets/img/hotel1.jpg" alt="" class="img-hotel">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <router-outlet></router-outlet>
 </div>
-
-
-<router-outlet></router-outlet>
